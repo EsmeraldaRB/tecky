@@ -25,18 +25,52 @@ namespace CapaDatos
             conexion.CerrarConexion();
             return tablaPersona;
         }
-        public void AgregarPersona(String paterno,String materno, String nombres, DateTime fecha_nac,int sexo,String curp,String telefono, String numExt, String numInt, String cp, int edoCivil, int discapacidad)
+
+        public int InsertPersona(CapaEntidades.Persona persona)
         {
-            comando.Connection = conexion.AbrirConexion();
-            comando.CommandText = "insert into personas (paterno,materno,nombres,fecha_nac,sexo,curp,telefono,numExt,numInt,cp," +
-                "edoCivil,discapacidad) values('"+paterno+"', '"+materno+"', '"+nombres+"', convert(datetime,'"+fecha_nac.ToString("MM-dd-yyyy")+"',101)," +
-                " "+sexo+", '"+curp+"', '"+telefono+"', '"+numExt+"', '"+numInt+"', '"+cp+"', "+edoCivil+", "+discapacidad+")";
-            //comando.CommandText = "insert into personas" +
-            //    "(paterno, materno, nombres,fecha_nac, sexo, curp, telefono, idCalle, numExt, numInt, cp, edoCivil, discapacidad) " +
-            //    "values('"+paterno+"', '"+materno+ "', '"+nombres+ "', '"+fecha_nac.ToShortDateString()+ "', "+sexo+ ", '"+curp+ "', '"+telefono+ "', "+idCalle+ ", '"+numExt+ "', '"+numInt+ "', '"+cp+ "', "+edoCivil+ ", "+discapacidad+");";
-            comando.CommandType = CommandType.Text;
-            comando.ExecuteNonQuery();
+            try
+            {
+                SqlCommand command = new SqlCommand("PROC_ALTA_personas", conexion.AbrirConexion());
+                command.CommandType = CommandType.StoredProcedure;
+                for (int i = 1; i < 7; i++)
+                    command.Parameters[i].Value = persona.Datos[i];
+                command.ExecuteNonQuery();
+
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
-}
+        public int UpdatePersona(CapaEntidades.Persona persona)
+        {
+            try
+            {
+                SqlCommand command = new SqlCommand("PROC_CAMBIO_personas", conexion.AbrirConexion());
+                command.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.AddWithValue("@id_personas", persona.Id_persona);
+                comando.Parameters.AddWithValue("@nombre", persona.Nombre);
+                comando.Parameters.AddWithValue("@apellido_paterno", persona.Apellido_paterno);
+                comando.Parameters.AddWithValue("@apellido_materno", persona.Apellido_materno);
+                comando.Parameters.AddWithValue("@sexo", persona.Sexo);
+                comando.Parameters.AddWithValue("@curp", persona.Curp);
+                comando.Parameters.AddWithValue("@fecha_nacimiento", persona.Fecha_nacimiento);
+                command.ExecuteNonQuery();
+
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+
+    }
+
+    
+
+
 }
