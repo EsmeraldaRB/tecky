@@ -229,6 +229,16 @@
   <ItemGroup>
     <None Include="Resources\logotec.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TecSystem\CapaEntidades\CapaEntidades.csproj">
+      <Project>{90b34247-5644-4286-b74a-cefdd5133dbc}</Project>
+      <Name>CapaEntidades</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CapaNegocio\CapaNegocio.csproj">
+      <Project>{bf5c69cf-0c63-428e-82ca-96eebe0e2017}</Project>
+      <Name>CapaNegocio</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
