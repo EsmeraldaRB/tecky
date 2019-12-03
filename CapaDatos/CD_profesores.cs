@@ -8,5 +8,6 @@ namespace CapaDatos
 {
     class CD_profesores
     {
+
     }
 }
